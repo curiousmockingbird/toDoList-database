@@ -4,6 +4,23 @@
 
 @using ToDoList.Models;
 @model List<ToDoList.Models.Item>;
+<script type="text/javascript">
+{
+function submitForm(item) {
+let form = document.getElementById("form");
+form.submit();
+if (item.CompleteTask == true)
+{
+  item.CompleteTask == false;
+} 
+if (item.CompleteTask == false)
+{
+  item.CompleteTask == true;
+}
+}
+
+}
+</script>
 
 <h1>Items</h1>
 
@@ -12,9 +29,17 @@
   <h3>No items have been added yet!</h3>
 } 
 
+@*
 @foreach (Item item in Model)
 {
-  <li>@Html.ActionLink($"{item.Description}", "Details", new { id = item.ItemId }) | @item.Category.Name</li>
+  <li>
+    <form id="form" method="post">
+       @Html.HiddenFor(x => Model[i].ItemId) @Html.CheckBoxFor(x => Model[i].CompleteTask, new {@onclick = "submitForm()"}) 
+      <input type="checkbox" onclick="submitForm($"{item.CompleteTask}")">
+    </form>
+      @Html.ActionLink($"{item.Description}", "Details", new { id = item.ItemId })
+  </li>
+  *@
 }
 
-<p>@Html.ActionLink("Add new item", "Create")</p>
+<p>@Html.ActionLink("Add new item", "Create")</p> 
